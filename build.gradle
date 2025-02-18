@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.1.5'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.2.2'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.drinkhere'
@@ -24,11 +24,12 @@ ext {
 dependencies {
 
     // Spring Boot 기본 스타터
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'junit:junit:4.13.1'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-webflux' // WebClient 사용
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-configuration-processor'
 
     // Spring Data
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -41,6 +42,11 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-config' // Config Client 처리
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp' // Spring Cloud Bus
 
+    // jwt
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.5'
+
     // Lombok
     implementation 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
@@ -49,6 +55,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'junit:junit:4.13.1'
     testImplementation 'org.mockito:mockito-core:3.11.2'
+
+    // properties
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 }
 
 dependencyManagement {
