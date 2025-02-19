@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "member-service", url = "http://member-service/api/v1/member/subscribe")
+@FeignClient(name = "member-service", url = "http://member-service/api/v1/member/m")
 public interface MemberServiceClient {
 
-    @PostMapping("/update")
+    @PostMapping("/subscribe-update")
     void updateSubscriptionStatus(
             @RequestHeader("member-id") Long memberId,
             @RequestParam("subscription-history-id") Long subscriptionHistoryId,

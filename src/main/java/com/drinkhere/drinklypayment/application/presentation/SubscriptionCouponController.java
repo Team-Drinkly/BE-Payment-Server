@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1/payment/coupons")
+@RequestMapping("/api/v1/payment/m")
 @RequiredArgsConstructor
 public class SubscriptionCouponController {
 
@@ -16,7 +16,7 @@ public class SubscriptionCouponController {
     /**
      * 특별 구독 쿠폰 지급 API
      */
-    @PostMapping("/issue")
+    @PostMapping("/coupon-issue")
     public ResponseEntity<String> issueCoupon(
             @RequestHeader("member-id") String memberId,
             @RequestParam CouponType type
@@ -28,7 +28,7 @@ public class SubscriptionCouponController {
     /**
      * 특별 구독 쿠폰 사용 API
      */
-    @PostMapping("/use")
+    @PostMapping("/coupon-use")
     public ResponseEntity<String> useCoupon(
             @RequestHeader("member-id") String memberId) {
 
