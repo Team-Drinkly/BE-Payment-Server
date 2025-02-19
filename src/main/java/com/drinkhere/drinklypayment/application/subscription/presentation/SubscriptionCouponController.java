@@ -1,7 +1,7 @@
-package com.drinkhere.drinklypayment.application.presentation;
+package com.drinkhere.drinklypayment.application.subscription.presentation;
 
-import com.drinkhere.drinklypayment.domain.entity.CouponType;
-import com.drinkhere.drinklypayment.domain.service.SubscriptionCouponService;
+import com.drinkhere.drinklypayment.domain.subscription.entity.CouponType;
+import com.drinkhere.drinklypayment.domain.subscription.service.SubscriptionCouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

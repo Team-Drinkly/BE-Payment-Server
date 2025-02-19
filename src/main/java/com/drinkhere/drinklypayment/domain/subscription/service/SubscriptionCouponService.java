@@ -1,14 +1,16 @@
-package com.drinkhere.drinklypayment.domain.service;
+package com.drinkhere.drinklypayment.domain.subscription.service;
 
 import com.drinkhere.drinklypayment.application.feign.MemberServiceClient;
 import com.drinkhere.drinklypayment.common.exception.coupon.CouponErrorCode;
 import com.drinkhere.drinklypayment.common.exception.coupon.CouponException;
-import com.drinkhere.drinklypayment.domain.entity.CouponStatus;
-import com.drinkhere.drinklypayment.domain.entity.CouponType;
-import com.drinkhere.drinklypayment.domain.entity.SubscriptionCoupon;
-import com.drinkhere.drinklypayment.domain.entity.SubscriptionHistory;
-import com.drinkhere.drinklypayment.domain.repository.SubscriptionCouponRepository;
-import com.drinkhere.drinklypayment.domain.repository.SubscriptionHistoryRepository;
+import com.drinkhere.drinklypayment.common.exception.subscription.SubscriptionErrorCode;
+import com.drinkhere.drinklypayment.common.exception.subscription.SubscriptionException;
+import com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus;
+import com.drinkhere.drinklypayment.domain.subscription.entity.CouponType;
+import com.drinkhere.drinklypayment.domain.subscription.entity.SubscriptionCoupon;
+import com.drinkhere.drinklypayment.domain.subscription.entity.SubscriptionHistory;
+import com.drinkhere.drinklypayment.domain.subscription.repository.SubscriptionCouponRepository;
+import com.drinkhere.drinklypayment.domain.subscription.repository.SubscriptionHistoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,11 +40,18 @@ public class SubscriptionCouponService {
     }
 
     /**
-     * 특별 구독 쿠폰 사용
+     * 특별 구독 쿠폰 사용 (구독 여부 체크 추가)
      */
     @Transactional
     public void useCoupon(Long memberId) {
 
+        // 현재 사용자가 구독 중인지 확인
+        boolean isSubscribed = memberServiceClient.isMemberSubscribed(memberId);
+        if (isSubscribed) {
+            throw new SubscriptionException(SubscriptionErrorCode.SUBSCRIPTION_ALREADY_ACTIVE);
+        }
+
+        // 사용 가능한 쿠폰 조회
         SubscriptionCoupon coupon = couponRepository.findByMemberIdAndStatus(memberId, CouponStatus.AVAILABLE)
                 .orElseThrow(() -> new CouponException(CouponErrorCode.COUPON_NOT_FOUND));
 

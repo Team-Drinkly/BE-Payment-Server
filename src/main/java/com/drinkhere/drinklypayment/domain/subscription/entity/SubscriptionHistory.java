@@ -1,4 +1,4 @@
-package com.drinkhere.drinklypayment.domain.entity;
+package com.drinkhere.drinklypayment.domain.subscription.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
