@@ -1,4 +1,4 @@
-package com.drinkhere.drinklypayment.domain.entity;
+package com.drinkhere.drinklypayment.domain.subscription.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -21,18 +21,18 @@ public class SubscriptionCoupon {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CouponType type;
+    private com.drinkhere.drinklypayment.domain.subscription.entity.CouponType type;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CouponStatus status;
+    private com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus status;
 
     public void useCoupon() {
-        this.status = CouponStatus.USED;
+        this.status = com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus.USED;
     }
 
     @Builder
-    public SubscriptionCoupon(Long memberId, CouponType type, CouponStatus status) {
+    public SubscriptionCoupon(Long memberId, com.drinkhere.drinklypayment.domain.subscription.entity.CouponType type, com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus status) {
         this.memberId = memberId;
         this.type = type;
         this.status = status;

@@ -1,7 +1,7 @@
-package com.drinkhere.drinklypayment.domain.repository;
+package com.drinkhere.drinklypayment.domain.subscription.repository;
 
-import com.drinkhere.drinklypayment.domain.entity.CouponStatus;
-import com.drinkhere.drinklypayment.domain.entity.SubscriptionCoupon;
+import com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus;
+import com.drinkhere.drinklypayment.domain.subscription.entity.SubscriptionCoupon;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
