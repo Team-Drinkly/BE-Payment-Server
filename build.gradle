@@ -58,6 +58,9 @@ dependencies {
 
     // properties
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+    // feign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 }
 
 dependencyManagement {
