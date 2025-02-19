@@ -1,5 +1,7 @@
 package com.drinkhere.drinklypayment.common.exception;
 
+import com.drinkhere.drinklypayment.common.exception.coupon.CouponException;
+import com.drinkhere.drinklypayment.common.exception.subscription.SubscriptionException;
 import com.drinkhere.drinklypayment.common.response.ApplicationResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -34,4 +36,25 @@ public class GlobalExceptionHandler {
     protected ResponseEntity<ApplicationResponse<Void>> handleRuntimeException(RuntimeException e) {
         return ResponseEntity.status(500).body(ApplicationResponse.server(null, e.getMessage()));
     }
+
+    /**
+     * 쿠폰 예외 처리
+     */
+    @ExceptionHandler(CouponException.class)
+    protected ResponseEntity<ApplicationResponse<String>> handleCouponException(CouponException e) {
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(ApplicationResponse.custom(null, e.getErrorCode().getHttpStatus().value(), e.getMessage()));
+    }
+
+    /**
+     * 구독 예외 처리
+     */
+    @ExceptionHandler(SubscriptionException.class)
+    protected ResponseEntity<ApplicationResponse<String>> handleSubscriptionException(SubscriptionException e) {
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(ApplicationResponse.custom(null, e.getErrorCode().getHttpStatus().value(), e.getMessage()));
+    }
+
 }
