@@ -16,6 +16,7 @@ public enum CouponErrorCode implements BaseErrorCode {
     COUPON_NOT_FOUND(HttpStatus.NOT_FOUND, "사용 가능한 쿠폰이 없습니다."),
     COUPON_ALREADY_USED(HttpStatus.BAD_REQUEST, "이미 사용된 쿠폰입니다."),
     COUPON_EXPIRED(HttpStatus.BAD_REQUEST, "쿠폰이 만료되었습니다."),
+    COUPON_ALREADY_ISSUED(HttpStatus.BAD_REQUEST, "이미 발급된 쿠폰이 존재합니다."),  // 중복 발급 방지
     COUPON_ISSUANCE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "쿠폰 발급 중 오류가 발생했습니다."),
     COUPON_USE_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "쿠폰 사용 중 오류가 발생했습니다.");
 

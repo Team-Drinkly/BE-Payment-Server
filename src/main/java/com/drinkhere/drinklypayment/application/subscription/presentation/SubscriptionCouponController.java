@@ -1,9 +1,9 @@
 package com.drinkhere.drinklypayment.application.subscription.presentation;
 
+import com.drinkhere.drinklypayment.common.response.ApplicationResponse;
 import com.drinkhere.drinklypayment.domain.subscription.entity.CouponType;
 import com.drinkhere.drinklypayment.domain.subscription.service.SubscriptionCouponService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,23 +17,23 @@ public class SubscriptionCouponController {
      * 특별 구독 쿠폰 지급 API
      */
     @PostMapping("/coupon-issue")
-    public ResponseEntity<String> issueCoupon(
+    public ApplicationResponse<String> issueCoupon(
             @RequestHeader("member-id") String memberId,
             @RequestParam CouponType type
     ) {
         couponService.issueCoupon(Long.valueOf(memberId), type);
-        return ResponseEntity.ok("쿠폰 지급 완료");
+        return ApplicationResponse.ok("쿠폰 지급 완료");
     }
 
     /**
      * 특별 구독 쿠폰 사용 API
      */
     @PostMapping("/coupon-use")
-    public ResponseEntity<String> useCoupon(
+    public ApplicationResponse<String> useCoupon(
             @RequestHeader("member-id") String memberId) {
 
         couponService.useCoupon(Long.valueOf(memberId));
-        return ResponseEntity.ok("쿠폰 사용 완료");
+        return ApplicationResponse.ok("쿠폰 사용 완료");
     }
 }
 

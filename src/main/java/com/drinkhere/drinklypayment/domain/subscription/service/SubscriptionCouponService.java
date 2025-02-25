@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class SubscriptionCouponService {
 
     private final SubscriptionCouponRepository couponRepository;
@@ -28,8 +29,14 @@ public class SubscriptionCouponService {
     /**
      * 특별 구독 쿠폰 지급
      */
-    @Transactional
     public void issueCoupon(Long memberId, CouponType type) {
+
+        // 중복 발급 여부 확인
+        boolean exists = couponRepository.existsByMemberIdAndTypeAndStatus(memberId, type, CouponStatus.AVAILABLE);
+        if (exists) {
+            throw new CouponException(CouponErrorCode.COUPON_ALREADY_ISSUED);
+        }
+
         SubscriptionCoupon coupon = SubscriptionCoupon.builder()
                 .memberId(memberId)
                 .type(type)
@@ -42,7 +49,6 @@ public class SubscriptionCouponService {
     /**
      * 특별 구독 쿠폰 사용 (구독 여부 체크 추가)
      */
-    @Transactional
     public void useCoupon(Long memberId) {
 
         // 현재 사용자가 구독 중인지 확인
