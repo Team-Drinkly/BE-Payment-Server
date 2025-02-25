@@ -29,7 +29,7 @@ public class PaymentService {
     public PaymentResponseDto processPayment(Long memberId, PaymentRequestDto requestDto) {
 
         // 현재 사용자가 구독 중인지 확인
-        boolean isSubscribed = memberServiceClient.isMemberSubscribed(memberId);
+        boolean isSubscribed = memberServiceClient.isMemberSubscribed(memberId).getPayload();
         if (isSubscribed) {
             throw new SubscriptionException(SubscriptionErrorCode.SUBSCRIPTION_ALREADY_ACTIVE);
         }

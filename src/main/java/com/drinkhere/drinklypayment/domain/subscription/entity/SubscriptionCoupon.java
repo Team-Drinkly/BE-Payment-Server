@@ -21,20 +21,25 @@ public class SubscriptionCoupon {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private com.drinkhere.drinklypayment.domain.subscription.entity.CouponType type;
+    private CouponType type;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus status;
+    private CouponStatus status;
+
+    @Column(nullable = false)
+    private boolean isUsed;  // 쿠폰 사용 여부 추가
 
     public void useCoupon() {
-        this.status = com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus.USED;
+        this.status = CouponStatus.USED;
+        this.isUsed = true;  // 사용 여부 업데이트
     }
 
     @Builder
-    public SubscriptionCoupon(Long memberId, com.drinkhere.drinklypayment.domain.subscription.entity.CouponType type, com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus status) {
+    public SubscriptionCoupon(Long memberId, CouponType type, CouponStatus status, boolean isUsed) {
         this.memberId = memberId;
         this.type = type;
         this.status = status;
+        this.isUsed = isUsed;
     }
 }
