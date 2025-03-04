@@ -1,8 +1,8 @@
 package com.drinkhere.drinklypayment.application.subscription.presentation;
 
 import com.drinkhere.drinklypayment.common.response.ApplicationResponse;
+import com.drinkhere.drinklypayment.domain.subscription.dto.CouponResponse;
 import com.drinkhere.drinklypayment.domain.subscription.entity.CouponType;
-import com.drinkhere.drinklypayment.domain.subscription.entity.SubscriptionCoupon;
 import com.drinkhere.drinklypayment.domain.subscription.service.SubscriptionCouponService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,16 +35,43 @@ public class SubscriptionCouponController {
     }
 
     @GetMapping("/coupons/available")
-    public ApplicationResponse<List<SubscriptionCoupon>> getAvailableCoupons(
+    public ApplicationResponse<List<CouponResponse>> getAvailableCoupons(
             @RequestHeader("member-id") String memberId
     ) {
-        return ApplicationResponse.ok(couponService.getAvailableCoupons(Long.valueOf(memberId)));
+        List<CouponResponse> response = couponService.getAvailableCoupons(Long.valueOf(memberId))
+                .stream()
+                .map(CouponResponse::fromEntity) // DTO 변환
+                .toList();
+
+        return ApplicationResponse.ok(response);
     }
 
     @GetMapping("/coupons/used")
-    public ApplicationResponse<List<SubscriptionCoupon>> getUsedCoupons(
+    public ApplicationResponse<List<CouponResponse>> getUsedCoupons(
             @RequestHeader("member-id") String memberId
     ) {
-        return ApplicationResponse.ok(couponService.getUsedCoupons(Long.valueOf(memberId)));
+        List<CouponResponse> response = couponService.getUsedCoupons(Long.valueOf(memberId))
+                .stream()
+                .map(CouponResponse::fromEntity)
+                .toList();
+
+        return ApplicationResponse.ok(response);
+    }
+
+    /**
+     * 만료된 쿠폰 ID 조회
+     */
+    @GetMapping("/coupons/expired")
+    public ApplicationResponse<List<Long>> getExpiredCoupons() {
+        return ApplicationResponse.ok(couponService.getExpiredCouponIds());
+    }
+
+    /**
+     * 만료된 쿠폰 처리
+     */
+    @PostMapping("/coupons/expire")
+    public ApplicationResponse<String> expireCoupons(@RequestBody List<Long> couponIds) {
+        couponService.expireCoupons(couponIds);
+        return ApplicationResponse.ok("만료된 쿠폰 처리 완료");
     }
 }

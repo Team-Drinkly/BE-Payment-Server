@@ -37,11 +37,14 @@ public class SubscriptionCouponService {
             throw new CouponException(CouponErrorCode.COUPON_ALREADY_ISSUED);
         }
 
+        LocalDateTime expirationDate = LocalDateTime.now().plusDays(30); // 30일 후 만료
+
         SubscriptionCoupon coupon = SubscriptionCoupon.builder()
                 .memberId(memberId)
                 .type(type)
                 .status(CouponStatus.AVAILABLE)
                 .isUsed(false)
+                .expirationDate(expirationDate)
                 .build();
 
         couponRepository.save(coupon);
@@ -84,7 +87,10 @@ public class SubscriptionCouponService {
      */
     @Transactional(readOnly = true)
     public List<SubscriptionCoupon> getAvailableCoupons(Long memberId) {
-        return couponRepository.findByMemberIdAndIsUsed(memberId, false);
+        return couponRepository.findByMemberIdAndIsUsed(memberId, false)
+                .stream()
+                .filter(coupon -> !coupon.isExpired()) // 만료된 쿠폰 제외
+                .toList();
     }
 
     /**
@@ -93,5 +99,20 @@ public class SubscriptionCouponService {
     @Transactional(readOnly = true)
     public List<SubscriptionCoupon> getUsedCoupons(Long memberId) {
         return couponRepository.findByMemberIdAndIsUsed(memberId, true);
+    }
+
+    /**
+     * 현재 날짜를 기준으로 만료된 쿠폰 ID 조회
+     */
+    @Transactional(readOnly = true)
+    public List<Long> getExpiredCouponIds() {
+        return couponRepository.findExpiredCoupons(LocalDateTime.now());
+    }
+
+    /**
+     * 만료된 쿠폰 상태 변경
+     */
+    public void expireCoupons(List<Long> couponIds) {
+        couponRepository.updateCouponsToExpired(couponIds);
     }
 }

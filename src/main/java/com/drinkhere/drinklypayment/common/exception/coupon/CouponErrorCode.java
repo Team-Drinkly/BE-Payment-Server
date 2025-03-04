@@ -25,6 +25,7 @@ public enum CouponErrorCode implements BaseErrorCode {
 
     @Override
     public ApplicationResponse<String> toResponseEntity() {
-        return ApplicationResponse.server(message);
+        return ApplicationResponse.custom(null, httpStatus.value(), message);
     }
+
 }
