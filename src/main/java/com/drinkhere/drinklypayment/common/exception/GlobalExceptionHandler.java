@@ -43,8 +43,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CouponException.class)
     protected ResponseEntity<ApplicationResponse<String>> handleCouponException(CouponException e) {
         return ResponseEntity
-                .status(e.getErrorCode().getHttpStatus())
-                .body(ApplicationResponse.custom(null, e.getErrorCode().getHttpStatus().value(), e.getMessage()));
+                .ok()
+                .body(ApplicationResponse.custom(null, 400, e.getMessage())); // 내부 코드만 400 유지
     }
 
     /**
@@ -53,7 +53,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(SubscriptionException.class)
     protected ResponseEntity<ApplicationResponse<String>> handleSubscriptionException(SubscriptionException e) {
         return ResponseEntity
-                .status(e.getErrorCode().getHttpStatus())
+                .ok()
                 .body(ApplicationResponse.custom(null, e.getErrorCode().getHttpStatus().value(), e.getMessage()));
     }
 
