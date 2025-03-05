@@ -1,7 +1,7 @@
 package com.drinkhere.drinklypayment.application.subscription.presentation;
 
 import com.drinkhere.drinklypayment.common.response.ApplicationResponse;
-import com.drinkhere.drinklypayment.domain.subscription.dto.CouponResponse;
+import com.drinkhere.drinklypayment.domain.subscription.dto.SubscriptionCouponDto;
 import com.drinkhere.drinklypayment.domain.subscription.entity.CouponType;
 import com.drinkhere.drinklypayment.domain.subscription.service.SubscriptionCouponService;
 import lombok.RequiredArgsConstructor;
@@ -35,26 +35,18 @@ public class SubscriptionCouponController {
     }
 
     @GetMapping("/coupons/available")
-    public ApplicationResponse<List<CouponResponse>> getAvailableCoupons(
+    public ApplicationResponse<List<SubscriptionCouponDto>> getAvailableCoupons(
             @RequestHeader("member-id") String memberId
     ) {
-        List<CouponResponse> response = couponService.getAvailableCoupons(Long.valueOf(memberId))
-                .stream()
-                .map(CouponResponse::fromEntity) // DTO 변환
-                .toList();
-
+        List<SubscriptionCouponDto> response = couponService.getAvailableCoupons(Long.valueOf(memberId));
         return ApplicationResponse.ok(response);
     }
 
     @GetMapping("/coupons/used")
-    public ApplicationResponse<List<CouponResponse>> getUsedCoupons(
+    public ApplicationResponse<List<SubscriptionCouponDto>> getUsedCoupons(
             @RequestHeader("member-id") String memberId
     ) {
-        List<CouponResponse> response = couponService.getUsedCoupons(Long.valueOf(memberId))
-                .stream()
-                .map(CouponResponse::fromEntity)
-                .toList();
-
+        List<SubscriptionCouponDto> response = couponService.getUsedCoupons(Long.valueOf(memberId));
         return ApplicationResponse.ok(response);
     }
 

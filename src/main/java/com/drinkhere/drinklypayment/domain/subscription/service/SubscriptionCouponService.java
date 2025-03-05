@@ -5,6 +5,7 @@ import com.drinkhere.drinklypayment.common.exception.coupon.CouponErrorCode;
 import com.drinkhere.drinklypayment.common.exception.coupon.CouponException;
 import com.drinkhere.drinklypayment.common.exception.subscription.SubscriptionErrorCode;
 import com.drinkhere.drinklypayment.common.exception.subscription.SubscriptionException;
+import com.drinkhere.drinklypayment.domain.subscription.dto.SubscriptionCouponDto;
 import com.drinkhere.drinklypayment.domain.subscription.entity.CouponStatus;
 import com.drinkhere.drinklypayment.domain.subscription.entity.CouponType;
 import com.drinkhere.drinklypayment.domain.subscription.entity.SubscriptionCoupon;
@@ -82,23 +83,21 @@ public class SubscriptionCouponService {
         memberServiceClient.updateSubscriptionStatus(memberId, history.getId(), durationDays);
     }
 
-    /**
-     * 사용 가능한 쿠폰 조회
-     */
     @Transactional(readOnly = true)
-    public List<SubscriptionCoupon> getAvailableCoupons(Long memberId) {
+    public List<SubscriptionCouponDto> getAvailableCoupons(Long memberId) {
         return couponRepository.findByMemberIdAndIsUsed(memberId, false)
                 .stream()
                 .filter(coupon -> !coupon.isExpired()) // 만료된 쿠폰 제외
+                .map(SubscriptionCouponDto::new) // DTO 변환
                 .toList();
     }
 
-    /**
-     * 사용 완료된 쿠폰 조회
-     */
     @Transactional(readOnly = true)
-    public List<SubscriptionCoupon> getUsedCoupons(Long memberId) {
-        return couponRepository.findByMemberIdAndIsUsed(memberId, true);
+    public List<SubscriptionCouponDto> getUsedCoupons(Long memberId) {
+        return couponRepository.findByMemberIdAndIsUsed(memberId, true)
+                .stream()
+                .map(SubscriptionCouponDto::new) // DTO 변환
+                .toList();
     }
 
     /**
