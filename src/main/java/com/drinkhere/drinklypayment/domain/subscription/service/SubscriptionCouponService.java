@@ -33,7 +33,7 @@ public class SubscriptionCouponService {
      */
     public Long issueCoupon(Long memberId, CouponType type) {
 
-        boolean exists = couponRepository.existsByMemberIdAndTypeAndStatus(memberId, type, CouponStatus.AVAILABLE);
+        boolean exists = couponRepository.existsByMemberIdAndType(memberId, type);
         if (exists) {
             throw new CouponException(CouponErrorCode.COUPON_ALREADY_ISSUED);
         }

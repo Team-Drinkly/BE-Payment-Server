@@ -17,7 +17,7 @@ public interface SubscriptionCouponRepository extends JpaRepository<Subscription
 
     List<SubscriptionCoupon> findByMemberIdAndIsUsed(Long memberId, boolean isUsed);
 
-    boolean existsByMemberIdAndTypeAndStatus(Long memberId, CouponType type, CouponStatus status);
+    boolean existsByMemberIdAndType(Long memberId, CouponType type);
 
     /**
      * 현재 날짜를 기준으로 만료된 쿠폰 ID 조회
