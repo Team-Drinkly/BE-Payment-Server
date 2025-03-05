@@ -36,14 +36,17 @@ public class SubscriptionCoupon {
     @Column(nullable = false)
     private LocalDateTime expirationDate; // 유효기간 추가
 
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false, length = 500)
+    private String description;
+
     public void useCoupon() {
         this.status = CouponStatus.USED;
         this.isUsed = true;
     }
 
-    /**
-     * 쿠폰이 만료되었는지 확인 (현재 시간이 expirationDate 이후인지 체크)
-     */
     public boolean isExpired() {
         return LocalDateTime.now().isAfter(expirationDate);
     }
@@ -59,5 +62,13 @@ public class SubscriptionCoupon {
         this.status = status;
         this.isUsed = isUsed;
         this.expirationDate = expirationDate;
+
+        if (type == CouponType.RESERVE) {
+            this.title = "사전예약 이벤트 30일 구독권";
+            this.description = "드링클리 사전 예약 이벤트에 참여한 분에게 드리는 구독권입니다";
+        } else if (type == CouponType.INITIAL) {
+            this.title = "앱 다운로드 이벤트 7일 구독권";
+            this.description = "드링클리 출시 기념 이벤트로 회원가입한 유저분에게 드리는 구독권입니다";
+        }
     }
 }
