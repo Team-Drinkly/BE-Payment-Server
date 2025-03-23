@@ -23,16 +23,23 @@ public class SubscriptionHistory extends BaseTimeEntity {
     private Long memberId;
 
     @Column(nullable = false)
-    private LocalDateTime startDate;  // 구독 시작일
+    private LocalDateTime startDate;
 
     @Column(nullable = false)
-    private int durationDays;  // 구독 기간 (ex. 7일, 30일)
+    private int durationDays;
+
+    @Column(nullable = false)
+    private boolean isUsed = false;
 
     @Builder
-    public SubscriptionHistory(Long memberId, LocalDateTime startDate, int durationDays) {
+    public SubscriptionHistory(Long memberId, LocalDateTime startDate, int durationDays, boolean isUsed) {
         this.memberId = memberId;
         this.startDate = startDate;
         this.durationDays = durationDays;
+        this.isUsed = isUsed;
+    }
+
+    public void markUsed() {
+        this.isUsed = true;
     }
 }
-

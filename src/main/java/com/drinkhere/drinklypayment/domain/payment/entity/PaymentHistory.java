@@ -28,8 +28,9 @@ public class PaymentHistory extends BaseTimeEntity {
     @Column(nullable = false)
     private int amount;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status; // SUCCESS, FAILED
+    private PaymentStatus status;
 
     @Column(nullable = false)
     private String orderId;
@@ -38,7 +39,7 @@ public class PaymentHistory extends BaseTimeEntity {
     private LocalDateTime createdAt;
 
     @Builder
-    public PaymentHistory(Long memberId, String billingKey, int amount, String status, String orderId, LocalDateTime createdAt) {
+    public PaymentHistory(Long memberId, String billingKey, int amount, PaymentStatus status, String orderId, LocalDateTime createdAt) {
         this.memberId = memberId;
         this.billingKey = billingKey;
         this.amount = amount;
@@ -46,4 +47,9 @@ public class PaymentHistory extends BaseTimeEntity {
         this.orderId = orderId;
         this.createdAt = createdAt;
     }
+
+    public void cancel() {
+        this.status = PaymentStatus.CANCELLED;
+    }
+
 }

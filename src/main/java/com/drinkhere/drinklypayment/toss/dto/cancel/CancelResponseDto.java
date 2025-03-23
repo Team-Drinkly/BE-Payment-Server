@@ -1,5 +1,11 @@
 package com.drinkhere.drinklypayment.toss.dto.cancel;
 
-public record CancelResponseDto(String paymentKey, String cancelReason, String requestedAt, String approvedAt,
-                                int cancelAmount) {
+import lombok.Builder;
+
+@Builder
+public record CancelResponseDto(
+        String paymentKey,
+        String status,
+        String message
+) {
 }
