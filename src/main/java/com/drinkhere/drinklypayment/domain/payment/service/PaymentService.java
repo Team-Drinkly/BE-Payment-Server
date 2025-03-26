@@ -80,10 +80,8 @@ public class PaymentService {
         }
 
         // 3. 구독 이력 확인
-        SubscriptionHistory subscription = subscriptionHistoryRepository.findByMemberIdAndOrderId(memberId, cancelRequestDto.orderId())
-                .orElseThrow(() -> new RuntimeException("구독 이력을 찾을 수 없습니다."));
-
-        if (subscription.isUsed()) {
+        boolean isSubscribed = memberServiceClient.isMemberSubscribed(memberId).getPayload();
+        if (isSubscribed) {
             throw new SubscriptionException(SubscriptionErrorCode.REFUND_ALREADY_USED);
         }
 
@@ -93,10 +91,7 @@ public class PaymentService {
         // 5. 결제 이력 상태 업데이트
         payment.cancel();
 
-        // 6. 구독 이력 삭제 또는 만료 처리
-        subscriptionHistoryRepository.delete(subscription); // 또는 expired 처리
-
-        // 7. 멤버 서비스에 구독 상태 해제 요청
+        // 6. 멤버 서비스에 구독 상태 해제 요청
         memberServiceClient.updateSubscriptionStatus(memberId, null, 0); // 구독 비활성화
 
         return cancelResponse;
