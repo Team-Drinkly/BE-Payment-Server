@@ -22,7 +22,7 @@ public interface SubscriptionCouponRepository extends JpaRepository<Subscription
     /**
      * 현재 날짜를 기준으로 만료된 쿠폰 ID 조회
      */
-    @Query("SELECT c.id FROM SubscriptionCoupon c WHERE c.expirationDate < :now AND c.status = 'USED'")
+    @Query("SELECT c.id FROM SubscriptionCoupon c WHERE c.expirationDate < :now AND c.status = 'AVAILABLE'")
     List<Long> findExpiredCoupons(LocalDateTime now);
 
     /**
