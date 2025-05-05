@@ -69,7 +69,7 @@ public class SubscriptionCouponService {
 
         int durationDays = switch (coupon.getType()) {
             case RESERVE -> 30;
-            case INITIAL -> 7;
+            case INITIAL -> 30;
         };
 
         LocalDateTime startDate = LocalDateTime.now();
