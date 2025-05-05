@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name = "member-service", url = "http://localhost:8000/api/v1/member/m")
+@FeignClient(name = "member-service", url = "${member-service.url}")
 public interface MemberServiceClient {
 
     @GetMapping("/check-subscription")

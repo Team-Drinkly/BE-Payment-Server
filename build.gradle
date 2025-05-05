@@ -61,6 +61,11 @@ dependencies {
 
     // feign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
+    implementation 'io.github.resilience4j:resilience4j-retry'
+    implementation 'io.github.resilience4j:resilience4j-circuitbreaker'
+
 }
 
 dependencyManagement {
@@ -74,7 +79,7 @@ tasks.named('test') {
 }
 
 bootJar{
-    archivesBaseName = 'paymentService'
-    archiveFileName = 'paymentService.jar'
+    archivesBaseName = 'payment-service'
+    archiveFileName = 'payment-service.jar'
     archiveVersion = "0.0.1"
 }
