@@ -45,7 +45,8 @@ public class SubscriptionCouponService {
             throw new CouponException(CouponErrorCode.COUPON_ALREADY_ISSUED);
         }
 
-        LocalDateTime expirationDate = LocalDateTime.now().plusDays(30); // 30일 후 만료
+//        LocalDateTime expirationDate = LocalDateTime.now().plusDays(30); // 30일 후 만료
+        LocalDateTime expirationDate = LocalDateTime.of(2025, 12, 31, 23, 59);
 
         SubscriptionCoupon coupon = SubscriptionCoupon.builder()
                 .memberId(memberId)
