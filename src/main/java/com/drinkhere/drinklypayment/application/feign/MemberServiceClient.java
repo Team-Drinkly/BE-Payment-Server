@@ -19,4 +19,7 @@ public interface MemberServiceClient {
             @RequestParam("subscription-history-id") Long subscriptionHistoryId,
             @RequestParam("duration-days") int durationDays
     );
+
+    @GetMapping("/subscribedlist")
+    ApplicationResponse<Boolean> checkDeactivatedSubscribed(Long memberId);
 }

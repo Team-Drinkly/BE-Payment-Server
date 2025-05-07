@@ -28,18 +28,11 @@ public class SubscriptionHistory extends BaseTimeEntity {
     @Column(nullable = false)
     private int durationDays;
 
-    @Column(nullable = false)
-    private boolean isUsed = false;
-
     @Builder
-    public SubscriptionHistory(Long memberId, LocalDateTime startDate, int durationDays, boolean isUsed) {
+    public SubscriptionHistory(Long memberId, LocalDateTime startDate, int durationDays) {
         this.memberId = memberId;
         this.startDate = startDate;
         this.durationDays = durationDays;
-        this.isUsed = isUsed;
     }
 
-    public void markUsed() {
-        this.isUsed = true;
-    }
 }
