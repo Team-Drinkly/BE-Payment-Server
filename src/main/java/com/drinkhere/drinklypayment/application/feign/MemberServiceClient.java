@@ -21,5 +21,6 @@ public interface MemberServiceClient {
     );
 
     @GetMapping("/subscribedlist")
-    ApplicationResponse<Boolean> checkDeactivatedSubscribed(Long memberId);
+    ApplicationResponse<Boolean> checkDeactivatedSubscribed(@RequestParam("memberId") Long memberId);
+
 }
