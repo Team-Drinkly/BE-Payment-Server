@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 public enum SubscriptionErrorCode implements BaseErrorCode {
 
+    DEACTIVATED_SUBSCRIBED_FOUND(HttpStatus.BAD_REQUEST, "탈퇴 이전에 이미 구독권 획득 기록이 있습니다."),
     SUBSCRIPTION_NOT_FOUND(HttpStatus.NOT_FOUND, "구독 정보가 존재하지 않습니다."),
     SUBSCRIPTION_ALREADY_ACTIVE(HttpStatus.BAD_REQUEST, "이미 활성화된 구독이 있습니다."),
     INVALID_SUBSCRIPTION_DURATION(HttpStatus.BAD_REQUEST, "유효하지 않은 구독 기간입니다."),

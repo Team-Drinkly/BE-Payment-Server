@@ -36,7 +36,7 @@ public class SubscriptionCouponService {
         // 탈퇴했었는데 발급했었는지 확인해서 이 역시 방지 - 가져온 memberid 리스트들이 initial 구독테이블에 있는지 확인
         boolean isSubscribed = memberServiceClient.checkDeactivatedSubscribed(memberId).getPayload();
         if (isSubscribed) {
-            throw new SubscriptionException(SubscriptionErrorCode.SUBSCRIPTION_ALREADY_ACTIVE);
+            throw new SubscriptionException(SubscriptionErrorCode.DEACTIVATED_SUBSCRIBED_FOUND);
         }
 
         // 현재가입자 중복 발급 방지
